@@ -1,0 +1,260 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block body %}
+    <div style="display:none;">
+        {% block h1 %}Dashboard{% endblock %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.sheet != null %}
+            <div id="sheet_id" data-sheet-id="{{ app.user.sheet.spreadSheetId }}"></div>
+            <div id="sheet_range" data-sheet-range="{{ app.user.sheet.rangeSheet }}"></div>
+        {% endif %}
+    </div>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.sheet == null %}
+        <a href="{{ path('addsheet') }}" style="display:flex; text-decoration: none;"><button class="btn btn-success m-auto">Add a Sheet</button></a>
+    {% endif %}
+    <div id="loader"></div>
+    <div id="myFeed" class="twitter animate-bottom" style="margin-left:auto; margin-right:auto; width:1040px; display: none; flex-wrap: wrap;">
+
+    </div>
+
+
+{% endblock %}
+{% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.sheet != null %}
+    {% block javascripts %}
+        <script
+                src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                crossorigin="anonymous"></script>
+        {{ encore_entry_script_tags('app') }}
+
+        <script> // Script to manage the loader
+            var myVar;
+
+            function myLoader() {
+                myVar = setTimeout(showPage, 10000); // Change the timing here
+            }
+
+            function showPage() {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("myFeed").style.display = "flex";
+            }
+        </script>
+
+        <script>
+            // Script to sanitize source -- Attribution jitbit / HtmlSanitizer
+            console.log('Sanitizer loading');
+
+            var HtmlSanitizer = new (function () {
+
+                var tagWhitelist_ = { // Tags all elements allowed
+                    'A': true, 'ABBR': true, 'B': true, 'BLOCKQUOTE': true, 'BODY': true, 'BR': true, 'CENTER': true, 'CODE': true, 'DIV': true, 'EM': true, 'FONT': true,
+                    'H1': true, 'H2': true, 'H3': true, 'H4': true, 'H5': true, 'H6': true, 'HR': true, 'I': true, 'IMG': true, 'LABEL': true, 'LI': true, 'OL': true, 'P': true, 'PRE': true,
+                    'SMALL': true, 'SOURCE': true, 'SPAN': true, 'STRONG': true, 'TABLE': true, 'TBODY': true, 'TR': true, 'TD': true, 'TH': true, 'THEAD': true, 'UL': true, 'U': true, 'VIDEO': true
+                };
+
+                var contentTagWhiteList_ = { 'FORM': true }; //tags that will be converted to DIVs
+
+                // Tags of all attribute Allowed
+                var attributeWhitelist_ = { 'align': true, 'border': true, 'class': true, 'color': true, 'controls': true, 'dir': true, 'height': true, 'href': true, 'hspace': true, 'lang': true, 'src': true, 'style': true, 'target': true, 'title': true, 'type': true, 'vspace': true, 'width': true, 'ALIGN': true, 'BORDER': true, 'CLASS': true, 'COLOR': true, 'CONTROLS': true, 'DIR': true, 'HEIGHT': true, 'HREF': true, 'HSPACE': true, 'LANG': true, 'SRC': true, 'STYLE': true, 'TARGET': true, 'TITLE': true, 'TYPE': true, 'VSPACE': true, 'WIDTH': true, };
+
+                var cssWhitelist_ = { 'color': true, 'background-color': true, 'font-size': true, 'text-align': true, 'text-decoration': true, 'font-weight': true };
+
+                var schemaWhiteList_ = [ 'http:', 'https:', 'data:', 'm-files:', 'file:', 'ftp:' ]; //which "protocols" are allowed in "href", "src" etc
+
+                var uriAttributes_ = { 'href': true, 'action': true, 'title': true, };
+
+                this.SanitizeHtml = function(input) {
+                    input = input.trim();
+                    if (input == "") return ""; //to save performance and not create iframe
+
+                    //firefox "bogus node" workaround
+                    if (input == "<br>") return "";
+
+                    var iframe = document.createElement('iframe');
+                    if (iframe['sandbox'] === undefined) {
+                        alert('Your browser does not support sandboxed iframes. Please upgrade to a modern browser.');
+                        return '';
+                    }
+                    iframe['sandbox'] = 'allow-same-origin allow-scripts';
+                    iframe.style.display = 'none';
+                    document.body.appendChild(iframe); // necessary so the iframe contains a document
+                    var iframedoc = iframe.contentDocument || iframe.contentWindow.document;
+                    if (iframedoc.body == null) iframedoc.write("<body></body>"); // null in IE
+                    iframedoc.body.innerHTML = input;
+
+                    function makeSanitizedCopy(node) {
+                        if (node.nodeType == Node.TEXT_NODE) {
+                            var newNode = node.cloneNode(true);
+                        } else if (node.nodeType == Node.ELEMENT_NODE && (tagWhitelist_[node.tagName] || contentTagWhiteList_[node.tagName])) {
+
+                            //remove useless empty spans (lots of those when pasting from MS Outlook)
+                            if ((node.tagName == "SPAN" || node.tagName == "B" || node.tagName == "I" || node.tagName == "U")
+                                && node.innerHTML.trim() == "") {
+                                return document.createDocumentFragment();
+                            }
+
+                            if (contentTagWhiteList_[node.tagName])
+                                newNode = iframedoc.createElement('DIV'); //convert to DIV
+                            else
+                                newNode = iframedoc.createElement(node.tagName);
+
+                            for (var i = 0; i < node.attributes.length; i++) {
+                                var attr = node.attributes[i];
+                                if (attributeWhitelist_[attr.name]) {
+                                    if (attr.name == "style") {
+                                        for (s = 0; s < node.style.length; s++) {
+                                            var styleName = node.style[s];
+                                            if (cssWhitelist_[styleName])
+                                                newNode.style.setProperty(styleName, node.style.getPropertyValue(styleName));
+                                        }
+                                    }
+                                    else {
+                                        if (uriAttributes_[attr.name]) { //if this is a "uri" attribute, that can have "javascript:" or something
+                                            if (attr.value.indexOf(":") > -1 && !startsWithAny(attr.value, schemaWhiteList_))
+                                                continue;
+                                        }
+                                        newNode.setAttribute(attr.name, attr.value);
+                                    }
+                                }
+                            }
+                            for (i = 0; i < node.childNodes.length; i++) {
+                                var subCopy = makeSanitizedCopy(node.childNodes[i]);
+                                newNode.appendChild(subCopy, false);
+                            }
+                        } else {
+                            newNode = document.createDocumentFragment();
+                        }
+                        return newNode;
+                    };
+
+                    var resultElement = makeSanitizedCopy(iframedoc.body);
+                    document.body.removeChild(iframe);
+                    return resultElement.innerHTML
+                        .replace(/<br[^>]*>(\S)/g, "<br>\n$1")
+                        .replace(/div><div/g, "div>\n<div"); //replace is just for cleaner code
+                }
+
+                function startsWithAny(str, substrings) {
+                    for (var i = 0; i < substrings.length; i++) {
+                        if (str.indexOf(substrings[i]) == 0) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                this.AllowedTags = tagWhitelist_;
+                this.AllowedAttributes = attributeWhitelist_;
+                this.AllowedCssStyles = cssWhitelist_;
+                this.AllowedSchemas = schemaWhiteList_;
+            });
+        </script>
+        <!-- or simply install locally: <script src="HtmlSanitizer.js"></script> -->
+
+        <script>
+            // script to manage Google connection API
+            function makeApiCall() {
+                let sheetId    = $('#sheet_id').data('sheet-id'); // Get the Sheet Id Param
+                let sheetRange = $('#sheet_range').data('sheet-range'); // Get the Sheet Range Param
+
+                var params = {
+                    // The ID of the spreadsheet to retrieve data from.
+                    spreadsheetId: sheetId,  // TODO: Update placeholder value. Set the param
+
+                    // The A1 notation of the values to retrieve.
+                    range: sheetRange,  // TODO: Update placeholder value. Set the param
+
+                    // How values should be represented in the output.
+                    // The default render option is ValueRenderOption.FORMATTED_VALUE.
+                    //valueRenderOption: '',  // TODO: Update placeholder value.
+
+                    // How dates, times, and durations should be represented in the output.
+                    // This is ignored if value_render_option is
+                    // FORMATTED_VALUE.
+                    // The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].
+                    //dateTimeRenderOption: '',  // TODO: Update placeholder value.
+                };
+
+                var request = gapi.client.sheets.spreadsheets.values.get(params);
+                request.then(function(response) {
+                    // TODO: Change code below to process the `response` object:
+                    console.log(response.result);
+                    populateSheet(response.result);
+                }, function(reason) {
+                    console.error('error: ' + reason.result.error.message);
+                });
+            }
+
+            function initClient() {
+                var API_KEY = '';  // TODO: Update placeholder with desired API key.
+                //API key
+
+                var CLIENT_ID = '';  // TODO: Update placeholder with desired client ID. // Client ID
+
+                // TODO: Authorize using one of the following scopes:
+                //   'https://www.googleapis.com/auth/drive'
+                //   'https://www.googleapis.com/auth/drive.file'
+                //   'https://www.googleapis.com/auth/drive.readonly'
+                //   'https://www.googleapis.com/auth/spreadsheets'
+                //   'https://www.googleapis.com/auth/spreadsheets.readonly'
+                var SCOPE = 'https://www.googleapis.com/auth/spreadsheets.readonly'; // We set just as read. no need more
+
+                gapi.client.init({
+                    'apiKey': API_KEY,
+                    'clientId': CLIENT_ID,
+                    'scope': SCOPE,
+                    'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+                }).then(function() {
+                    gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignInStatus);
+                    updateSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+                });
+            }
+
+            function handleClientLoad() {
+                gapi.load('client:auth2', initClient);
+            }
+
+            function updateSignInStatus(isSignedIn) {
+                if (isSignedIn) {
+                    makeApiCall();
+                }
+            }
+
+            function handleSignInClick(event) {
+                gapi.auth2.getAuthInstance().signIn();
+            }
+
+            function handleSignOutClick(event) {
+                gapi.auth2.getAuthInstance().signOut();
+            }
+
+            //function to show all the feed once, you are connected
+            function populateSheet(result){
+                if(result.values.length === 1){
+                    $('.twitter').append("<p>There is no news yet</p>");
+                } else {
+                    for( var row = (result.values.length) - 1; row >= 1; row--){
+                        if(result.values[row][0] === 'Twitter'){ // Filter Source from Twitter
+                                $('.twitter').append(HtmlSanitizer.SanitizeHtml(result.values[row][5])+ "<script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></" + "script>");
+
+                        } else if(result.values[row][0] === 'RSS') { // Filter Source from RSS
+                            var date = HtmlSanitizer.SanitizeHtml(result.values[row][1]); // Source must be date or change the column
+                            var author = HtmlSanitizer.SanitizeHtml(result.values[row][2]); // Source must be author or change the column
+                            var content = HtmlSanitizer.SanitizeHtml(result.values[row][3]); // Source must be content or change the column
+                            var url = HtmlSanitizer.SanitizeHtml(result.values[row][4]); // Source must be url or change the column
+                            var title = HtmlSanitizer.SanitizeHtml(result.values[row][5]); // Source must title date or change the column
+                            var image = HtmlSanitizer.SanitizeHtml(result.values[row][6]); // Source must be image url or change the column
+
+                            // Front for post of RSS
+                            $('.twitter').append("<div class=\"rss\" style=\"width: 500px;margin:10px auto;font: normal normal 16px/1.4 Helvetica, Roboto;\"> <div style=\"background-color: rgb(255, 255, 255);overflow: hidden;border-width:1px;border-style:solid;border-color: rgb(225, 232, 237);border-radius:5px;\"> <div style=\"padding:20px 20px 10px;\"> <div style=\"display: flex;\"> <h2 style=\"margin:0;font-size: 16px;\">"+author+" - "+title+"</h2> <img src=\"https://www.icone-png.com/png/1/1009.png\" alt=\"icone RSS\" id=\"IconRSS\"> </div> <hr><div>"+content+"</div> <img src=\""+image+"\" alt=\"IMG of the article\" id=\"ArticleRSSImg\"><div style=\"margin-top:10.4px;font-size: 14px;color: rgb(105, 120, 130);\">Published on "+date+"</div></div><a href=\""+url+"\" style=\"color: rgb(238, 128, 47);text-decoration: none;padding:9px 20px;display: block;font-size: 14px;border-color: rgb(225, 232, 237);border-style:solid;border-radius:0px 0px 4px 4px;border-width:1px 0px 0px;\">Check Source</a> </div> </div>");
+                        }
+                    }
+                }
+            }
+        </script>
+        <script async defer src="https://apis.google.com/js/api.js"
+                onload="this.onload=function(){};handleClientLoad()"
+                onreadystatechange="if (this.readyState === 'complete') this.onload()">
+        </script>
+    {% endblock %}
+{% endif %}

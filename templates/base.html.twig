@@ -3,10 +3,42 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        {{ encore_entry_link_tags('app') }}
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
         {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
-    <body>
+    <body onload="myLoader()" style="margin:0;" class="mx-2 mt-2">
+    {% block nav %}
+        <nav class="py-2">
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="{{ path('app_logout') }}" style="text-decoration: none;" class="d-flex mx-2"><button class="btn btn-danger my-auto">Logout</button></a>
+            <a href="{{ path('dashboard') }}" style="display:flex; text-decoration: none;"><button class="btn btn-success my-auto">Dash Board</button></a>
+        {% else %}
+            <a href="{{ path('signup') }}"  style="text-decoration: none;" class="d-flex mx-2"><button class="btn btn-success my-auto">Sign up</button></a>
+            <a href="{{ path('app_login') }}"  style="text-decoration: none;" class="d-flex mx-2"><button class="btn btn-primary my-auto">Login</button></a>
+        {% endif %}
+            <h1 style="{% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.sheet == null %}{% elseif is_granted('IS_AUTHENTICATED_FULLY') %}padding-left:100px;{% else %}padding-right:232px;{% endif %}">{% block h1 %}Login{% endblock %}</h1>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if app.user.sheet == null %}
+                    <a href="{{ path('addsheet') }}" style="display:flex; text-decoration: none;"><button class="btn btn-success my-auto mx-2">Add a Sheet</button></a>
+                {% else %}
+                    <button id="signin-button" onclick="handleSignInClick()" class="btn btn-primary my-auto mx-2">Sign in Google</button>
+                    <button id="signout-button" onclick="handleSignOutClick()" class="btn btn-primary my-auto mx-2">Sign out Google</button>
+                    {% endif %}
+            {% endif %}
+        </nav>
+    {% endblock %}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+
     </body>
 </html>
