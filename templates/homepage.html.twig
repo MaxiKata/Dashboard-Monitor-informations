@@ -9,6 +9,327 @@
             <div id="sheet_range" data-sheet-range="{{ app.user.sheet.rangeSheet }}"></div>
         {% endif %}
     </div>
+    <div class="container bg-white border border-success p-3 my-4">
+        <h2 class="h1 text-center my-4">How to create your own monitoring in 3 steps with our dashboard for free !</h2>
+        <p>This dashboard app has been done in order to monitor the chosen source from RSS feeds and Twitter. In order to do so, we are going to use IFTTT to cross different application and store all your datas into a protected file on Google Drive.</p>
+
+        <ul class="py-4" style="border-bottom: 2px solid black; border-top: 2px solid black;">
+            <div class="h2 text-center">Tutorial plan</div>
+            <li><a style="text-decoration: none" href="#step1">Step 1 - Connect to all our services</a></li>
+            <ul>
+                <li><a style="text-decoration: none" href="#step1_Twitter">Twitter</a></li>
+                <li><a style="text-decoration: none" href="#step1_RSS">RSS Feeds</a></li>
+                <li><a style="text-decoration: none" href="#step1_GoogleSheets">Google Sheets</a></li>
+            </ul>
+            <li><a style="text-decoration: none" href="#step2">Step 2 - Create our Applets </a></li>
+            <ul>
+                <li><a style="text-decoration: none" href="#step2_Twitter">Twitter</a></li>
+                <li><a style="text-decoration: none" href="#step2_RSS">RSS Feeds</a></li>
+            </ul>
+            <li><a style="text-decoration: none" href="#step3">Step 3 - Create an account on the platform and register your document</a></li>
+            <ul>
+                <li><a style="text-decoration: none" href="#step3_GoogleSheets">Google Sheets</a></li>
+                <li><a style="text-decoration: none" href="#step3_Dashboard">Dashboard</a></li>
+            </ul>
+        </ul>
+
+        <ul class="pt-2 pb-4" style="border-bottom: 2px solid black;">
+            <div class="h2 text-center">Advantages</div>
+            <li>Monitor only the information you wish to get without mixing pro &amp; perso (without following from your accounts)</li>
+            <li>Unlimited sources</li>
+            <li>Data store on your google drive</li>
+        </ul>
+
+        <ol class="pt-2 pb-4" style="border-bottom: 2px solid black;">
+            <div class="h2 text-center">What you must have to create your source</div>
+            <li>Google account if not <a title="Sign Up" href="https://www.google.com/intl/en/gmail/about/">Sign up in Google</a>&nbsp;</li>
+            <li>Twitter account if not <a href="https://twitter.com">Sign up in Twitter</a></li>
+        </ol>
+        <div class="pt-2 pb-4">
+            <ul >
+                <div class="h2 text-center">What we will create to get our source</div>
+                <li><a title="IFTTT" href="https://ifttt.com">IFTTT</a> account</li>
+            </ul>
+
+            <p>Through IFTTT, we will create our own Applets by using 3 services:</p>
+            <ul>
+                <li>Twitter</li>
+                <li>RSS Feed</li>
+                <li>Google Sheets</li>
+            </ul>
+
+            <p>Let's connect on <a title="IFTTT" href="https://ifttt.com">IFTTT</a>. Once you are connected, you should arrive on this page :</p>
+
+            <div class="d-flex mb-3"><img src="{{ asset('img/Tree.png') }}" alt="Tree IFTTT" class="mw-100 border border-secondary mx-auto"></div>
+
+            <p>Our goal will be to connect to the 3 services we are going to use. So click on "Get more" by the roots of tree.</p>
+        </div>
+
+    </div>
+
+    <div id="step1" class="container bg-white border border-success p-3 my-4">
+        <h2 class="text-center my-4">--------- Step 1 - Connect to all our services ---------</h2>
+
+        <section id="step1_Twitter" class="my-3" style="border:3px solid #28abec;">
+            <h3 class="text-center py-3 mb-3" style="background-color: #28abec; color:white;">Twitter</h3>
+
+            <div class="m-3">
+                <p>You will arrive on discover to browse the service we wish. Let's search Twitter or click <a href="https://ifttt.com/twitter">here</a>:&nbsp;</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Twitter_explore.png') }}" alt="Twitter Explore" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>The result shown concerned Connections but we are interested of Services. So Click on "Services" and Select Twitter</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Twitter_connect.png') }}" alt="Connect to Twitter" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>You should be redirected to twitter page in order to authorize IFTTT to access your account</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Twitter_login.png') }}" alt="Twitter Login" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Valid your connection with Twitter service to end connection with IFTTT.</p>
+
+            </div>
+
+        </section>
+
+        <section id="step1_RSS" class="my-3" style="border:3px solid #ed7633">
+            <h3 class="text-center py-3 mb-3" style="background-color: #ed7633; color:white;">RSS Feed</h3>
+
+            <div class="m-3">
+                <p>For RSS Feed, search on the RSS Feed on the top and select Services or click <a href="https://ifttt.com/feed">here</a></p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/RSS_Feed_connect.png') }}" alt="Conenct to RSS Feed" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Just click on "Connect". This will register RSS Feed service on your IFTTT account</p>
+            </div>
+        </section>
+
+        <section id="step1_GoogleSheets" class="my-3" style="border:3px solid #23448b;">
+            <h3 class="text-center py-3 mb-3" style="background-color: #23448b; color:white;">Google Sheets</h3>
+            <div class="m-3">
+                <p>For Google Sheets Service, search Google Sheets in Services or click <a href="https://ifttt.com/google_sheets" target="_blank">here</a></p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Google_Sheets_connect.png') }}" alt="Connect to Google Sheets" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>You will be redirected to google account in order to authorize IFTTT to connect.</p>
+            </div>
+        </section>
+
+        <p>Congratulations !! All connections to the require services have been made !!!</p>
+    </div>
+
+    <div id="step2" class="container bg-white border border-success p-3 my-4">
+        <h2 class="text-center my-4">--------- Step 2 - Create our Applets ---------</h2>
+
+        <section id="step2_Twitter" class="my-3" style="border:3px solid #28abec;">
+            <h3 class="text-center py-3 mb-3" style="background-color: #28abec; color:white;">Twitter</h3>
+            <div class="m-3">
+                <p>Now let's create our first customized Applets with Twitter !</p>
+
+                <p>Click on the top-righthand corner, on your avatar.</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Menu1.png') }}" alt="Menu of IFTTT" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>A menu will open, choose "Create". This should bring you to page to create your own Applet:</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/CreateApplet.png') }}" alt="Create Applet" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Here the goal will be to create an Applet by mixing 2 services to get information:</p>
+
+                <ul>
+                    <li>"This" is the 1st service from where we are going to collect information (Twitter, RSS)</li>
+                    <li>"That" is the 2nd service where we are going to collect the wish information (Google Sheet)</li>
+                </ul>
+
+                <p>Let's Create an Applet with Twitter &amp; GoogleSheet</p>
+
+                <p>Click on "This" and search "Twitter"</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Twitter_service.png') }}" alt="Twitter Service" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>You should arrive on step 2 where you should choose our trigger. The one that interest us is "New Tweet by a specific user"</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Twitter_choose_trigger.png') }}" alt="Twitter choose trigger" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Just add the username without "@":</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Twitter_complete_trigger.png') }}" alt="Twitter complete trigger" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Complete the trigger and click on "create trigger"</p>
+
+                <p>This is all for the Twitter informations. You should now select "That" in order to link a second service</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/select_that.png') }}" alt="Select That" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Now search Google Sheets as action service and click on it</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Google_Sheets_search.png') }}" alt="Google Sheets Search result" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>You must choose the action "Add row to spreadsheet"</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Google_Sheets_choose_action_add_row.png') }}" alt="Google Sheets Choose Action Add row" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>You should arrive on Step 5 and see all the fields filled this way :</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Twitter_action_fields.png') }}" alt="Twitter Applet Action fields per default" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>You should modify all the fields, in order to get all the applet to the same file, you should always set :</p>
+
+                <ul>
+                    <li>The same spreadsheet name (ex: Feeds)</li>
+                    <li>The same Formatted row that will give you</li>
+                    <li>The same Drive folder path (ex: IFTTT/Feeds)</li>
+                </ul>
+
+                <p>For Twitter Applet the Formatted row should be always as (so just copy / paste):</p>
+
+                <p class="p-4" style="background-color: black; color: white;"><code class="text-center" style="background-color: black; color: white;">Twitter ||| {{'{{CreatedAt}}'}} ||| @{{'{{UserName}}'}} ||| {{'{{Text}}'}} ||| {{'{{LinkToTweet}}'}} ||| {{'{{TweetEmbedCode}}'}}</code></p>
+
+                <p>Your action should finaly look lke this:</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Twitter_action_fields_end.png') }}" alt="Twitter Applet Action fields corrected" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Click to "Create Action" to  access to the review & finish page</p>
+
+                <p>You should arrive on the Review and finish page where I advise your to remove the notifications. You can also modify the title if needed:</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Twitter_review_finish.png') }}" alt="Twitter Review Applet" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Click on "Finish" to your Applet.</p>
+
+                <p>Congratulations, your first Twitter Applet has been done !</p>
+
+                <p>From this last view you can come any time to modify, disconnect or delete it !</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Twitter_end.png') }}" alt="Twitter Applet Done" class="mw-100 border border-secondary mx-auto"></div>
+            </div>
+        </section>
+
+        <section id="step2_RSS" class="my-3" style="border:3px solid #ed7633;">
+            <h3 class="text-center py-3 mb-3" style="background-color: #ed7633; color:white;">RSS Feed</h3>
+            <div class="m-3">
+                <p>Click on the top-righthand corner, on your avatar.</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Menu1.png') }}" alt="Menu of IFTTT" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>A menu will open, choose "Create". This should bring you to page to create your own Applet:</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/RSS_Feed_service.png') }}" alt="RSS Feed Service" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>You should arrive on step 2 where you should choose our trigger. You can choose the trigger you wish. For the Example, we will choose "New Feed item". This will give us all the flow from the source.</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/RSS_Feed_choose_trigger.png') }}" alt="RSS Feed Choose Trigger" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Add your RSS link (if it gives you the error message "Feed is not reachable at this time.", just replace https by http)</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/RSS_Feed_complete_trigger.png') }}" alt="RSS Feed Complete Trigger" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Complete the trigger and click on "create trigger"</p>
+
+                <p>This is all for the RSS Feed informations. You should now select "That" in order to link a second service</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/RSS_Feed_that.png') }}" alt="RSS Feed That view" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Now search Google Sheets as action service and click on it</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Google_Sheets_search.png') }}" alt="Google Sheets Search result" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>You must choose the action "Add row to spreadsheet"</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Google_Sheets_choose_action_add_row.png') }}" alt="Google Sheets Choose Action Add row" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>You should arrive on Step 5 and see all the fields filled this way :</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/RSS_Feed_action_fields.png') }}" alt="RSS Feed Applet action fields per default" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>You should modify all the fields, in order to get all the applet to the same file, you should always set :</p>
+
+                <ul>
+                    <li>The same spreadsheet name (ex: Feeds) <span style="color: red;">The name of document should be always the same</span></li>
+                    <li>The same Formatted row that will give you</li>
+                    <li>The same Drive folder path (ex: IFTTT/Feeds)<span style="color: red;">The path of document should be always the same</span></li>
+                </ul>
+
+                <p>For RSS Feed Applet the Formatted row should be always as (so just copy / paste):</p>
+
+                <p class="p-4" style="background-color: black; color: white;"><code class="text-center" style="background-color: black; color: white;">RSS ||| {{'{{EntryPublished}}'}} ||| {{'{{EntryAuthor}}'}} ||| {{'{{EntryContent}}'}} ||| {{'{{EntryUrl}}'}} ||| {{'{{EntryTitle}}'}} ||| {{'{{EntryImageUrl}}'}}</code></p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/RSS_Feed_action_fields_end.png') }}" alt="RSS Feed Applet action fields corrected" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Click to "Create Action" to access to the review & finish page</p>
+
+                <p>You should arrive on the Review and finish page where I advise your to remove the notifications. You can also modify the title if needed:</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/RSS_Feed_review_finish.png') }}" alt="RSS Feed Review Applet" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Click on "Finish" to your Applet.</p>
+
+                <p>Congratulations, your first Twitter Applet has been done !</p>
+
+                <p>From this last view you can come any time to modify, disconnect or delete it !</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/RSS_Feed_end.png') }}" alt="RSS Feed Applet Done" class="mw-100 border border-secondary mx-auto"></div>
+            </div>
+        </section>
+
+        <p class="h3">That's it ! You now know how to create all the Applet to monitor the source you wish from Twitter or RSS</p>
+    </div>
+    <div id="step3" class="container bg-white border border-success p-3 my-4">
+        <h2 class="text-center my-4">Step 3 - Create an account on the platform and register your document </h2>
+    
+        <p>You are almost there !<br><br>
+            Now we must get information from our Google sheets and then register the Google sheet to the dashboard
+        </p>
+
+        <section id="step3_GoogleSheets" class="my-3" style="border:3px solid #23448b;">
+            <h3 class="text-center py-3 mb-3" style="background-color: #23448b; color:white;">Google Sheets</h3>
+            <div class="m-3">
+                <p>First thing to do his to go to our google drive to get 2 informations, the Google spreadsheet ID and the Sheet name. So follow the link:
+                    <a style="text-decoration: none;" href="https://drive.google.com/drive/my-drive">Google Drive</a>
+                    <br><br>
+                    Once you are connected, go to the drive where you pointed all your Applets, for us it was My Drive / IFTTT / Feeds / Feeds, such as :
+                </p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Drive_my_feeds.png') }}" alt="Drive My Feeds" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Let's have a look to our document (if you just created your Applet, you may have no document yet):</p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Drive_my_feeds_doc.png') }}" alt="Drive My Feeds Document" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>As we can see, there is already planty of new feeds in our document ! In order to add them to the dash board, we will need to get 2 informations:</p>
+                <ul>
+                    <li>The ID of the document, situated in the URL (surround in yellow), for us : 1tMtgMBbPhlNjbb2MKAr7dE9VE8dElYpB4ZhqSpGml0w</li>
+                    <li>The name of the Sheet, situated at the bottom left (surround in yellow), for us : Sheet1</li>
+                </ul>
+                <p style="color:red">Important: file name must be without space because it mays not find the document otherwise</p>
+            </div>
+        </section>
+
+        <section id="step3_Dashboard" class="my-3" style="border:3px solid darkred;">
+            <h3 class="text-center py-3 mb-3" style="background-color: darkred; color:white;">Dashboard</h3>
+            <div class="m-3">
+                <p>Now start the part where we must link the Google Sheet with our dashboard.</p>
+
+                <p>Sign up to the tool: <a style="text-decoration: none;" href="http://dashboard.maximterior.com/signup">Signup</a><br>
+                    Or simply login if you already sign up : <a style="text-decoration: none;" href="http://dashboard.maximterior.com/login">Login</a><br><br>
+                    If it is your first connection, you must register your Google Sheet, to do so, click on the button in the navbar or <a style="text-decoration: none;" href="http://dashboard.maximterior.com/dashboard/addsheet">Click here</a>
+                </p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Dashboard_add_sheet.png') }}" alt="Dashboard add sheet" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p>Add your spreadsheet Id and name of sheet as shown on the picture above</p>
+
+                <p>Once it is done, you must login with your Google account to allow the website to get the information from the Google sheet. To do so, click on the button "Sign in Google" in the navbar, this will redirect you to google.</p>
+                 <p>That's it ! Your dashboard has been built: </p>
+
+                <div class="d-flex mb-3"><img src="{{ asset('img/Dashboard_done.png') }}" alt="Dashboard done" class="mw-100 border border-secondary mx-auto"></div>
+
+                <p style="color:red;">Important: Your Google Sheet can handle maximum 2000 rows. It is important to clean the information you have in it.  Like this, it will release some space from your drive but make the download faster too</p>
+            </div>
+        </section>
+
+    </div>
+
 
 {% endblock %}
 {% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.sheet != null %}
